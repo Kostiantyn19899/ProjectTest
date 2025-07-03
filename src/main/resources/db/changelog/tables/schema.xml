@@ -24,14 +24,18 @@
             <column name="field" type="VARCHAR(255)"/>
             <column name="description" type="VARCHAR(1000)"/>
             <column name="experience" type="VARCHAR(255)"/>
-            <column name="deadline" type="DATETIME "/>
+            <column name="deadline" type="DATE"/>
+            <column name="client_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
     </changeSet>
 
-    <changeSet id="add fk for client and project" author="konstantin">
-        <addForeignKeyConstraint baseTableName="clients" baseColumnNames="client_id"
-                                 constraintName="client_id_projectID"
-                                 referencedTableName="projects"
+    <changeSet id="add fk from project to client" author="konstantin">
+        <addForeignKeyConstraint baseTableName="projects"
+                                 baseColumnNames="client_id"
+                                 constraintName="fk_project_client"
+                                 referencedTableName="clients"
                                  referencedColumnNames="id"
                                  onDelete="CASCADE"/>
     </changeSet>

@@ -26,7 +26,7 @@ public class Client {
 
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
-    private Set<Project> favorites = new HashSet<>();
+    private Set<Project> projects = new HashSet<>();
 }
