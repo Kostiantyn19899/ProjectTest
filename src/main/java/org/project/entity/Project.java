@@ -29,8 +29,9 @@ public class Project {
 
     private LocalDate deadline;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
+    @OneToMany(mappedBy = "vacancy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "vacancy_id")
     @JsonBackReference
-    private Client client;
+    private Vacancy vacancy;
+
 }
