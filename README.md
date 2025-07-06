@@ -295,7 +295,7 @@ Example response (204 No Content): Empty response body.
 
 Deployment
 Link to the deployed application:
-[Insert public link to your deployed application here]
+https://projecttest-nagb.onrender.com
 
 Instructions for testing the deployed project:
 You can use the example requests above with Postman, Insomnia, or curl, replacing localhost:8080 with the public URL of
