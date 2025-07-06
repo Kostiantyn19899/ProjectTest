@@ -23,7 +23,7 @@ public class Vacancy {
 
     private String experience;
 
-    private String Country;
+    private String country;
 
     private String description;
 
