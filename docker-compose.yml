@@ -1,5 +1,4 @@
 version: '3.9'
-
 services:
   postgres:
     image: postgres:16
@@ -9,16 +8,11 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
     ports:
-      - "5433:5432" # Или "5432:5432", если порт 5432 на хосте свободен
+      - "5433:5432"
+
     networks:
       - project-net
     restart: always
-    healthcheck: # Добавляем проверку здоровья для PostgreSQL
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 5s # Проверять каждые 5 секунд
-      timeout: 5s # Таймаут для каждой проверки 5 секунд
-      retries: 5 # Повторить 5 раз, прежде чем объявить сервис нездоровым
-      start_period: 30s # УВЕЛИЧЕНО: Дать 30 секунд на запуск перед началом проверок
 
   project:
     image: project
@@ -26,10 +20,9 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8081:8080" # Или "8080:8080", если порт 8080 на хосте свободен
+      - "8080:8080"
     depends_on:
-      postgres: # Указываем зависимость от postgres
-        condition: service_healthy # ОЧЕНЬ ВАЖНО: Ждем, пока postgres не станет здоровым
+      - postgres
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/project
       SPRING_DATASOURCE_USERNAME: postgres
@@ -38,14 +31,6 @@ services:
     networks:
       - project-net
     restart: always
-    command: > # Добавляем команду ожидания перед запуском приложения
-      sh -c "
-      echo 'Waiting for postgres to be ready...' &&
-      while ! nc -z postgres 5432; do
-        sleep 1;
-      done;
-      echo 'Postgres is ready! Starting application...';
-      java -jar /app/ProjectTest-1.0-SNAPSHOT.jar"
 
 networks:
   project-net:
