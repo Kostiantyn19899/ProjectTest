@@ -2,8 +2,15 @@ package org.project.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import lombok.*;
 
+@Entity
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "vacancies")
 public class Vacancy {
 
     @Id
@@ -14,11 +21,11 @@ public class Vacancy {
 
     private String field;
 
-    private String description;
-
     private String experience;
 
-    private LocalDate deadline;
+    private String Country;
+
+    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")

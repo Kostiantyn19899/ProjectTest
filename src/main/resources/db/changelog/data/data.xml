@@ -6,8 +6,8 @@
 
     <changeSet id="1" author="konstantin">
         <sql>
-            INSERT INTO clients( name, email, password) values ('test','test@gmail','12345');
-            INSERT INTO projects( name, field, description, experience, deadline, client_id) values ('project','test2','2548796','$2a$10$c/mM34wFCiCnuxmNKcvFhu/sq/ByiL.hWGo1VafcolmxNBbV78tr2','2025-12-20 00:00:00', 1);
+            INSERT INTO projects( name, field, description, experience, deadline) values ('testName','testField','2548796','joghasduigf','2025-12-20 00:00:00');
+            INSERT INTO vacancies( name, field, description, experience, country, project_id) values ('test','testField','desc','expirience 5+', 'ukr', 1);
         </sql>
     </changeSet>
 
