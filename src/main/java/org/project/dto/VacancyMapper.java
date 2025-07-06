@@ -2,7 +2,6 @@ package org.project.dto;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.project.entity.Project;
 import org.project.entity.Vacancy;
 
 @Mapper(componentModel = "spring")

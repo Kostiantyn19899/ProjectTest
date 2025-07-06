@@ -3,13 +3,11 @@ package org.project.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.project.dto.*;
-import org.project.entity.Project;
 import org.project.entity.Vacancy;
 import org.project.service.VacancyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

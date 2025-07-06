@@ -12,8 +12,6 @@ import org.project.dto.ProjectResponseDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.List;
 
 @Tag(name = "Project Management", description = "Operations for managing project")
@@ -24,7 +22,6 @@ public interface ProjectApi {
             content = @Content(array = @ArraySchema(schema = @Schema(implementation = ProjectResponseDto.class))))
     ResponseEntity<List<ProjectResponseDto>> getAll();
 
-
     @Operation(summary = "Get project by ID", description = "Retrieves a specific project by its unique identifier")
     @Parameter(name = "id", description = "ID of the category to retrieve", required = true,
             schema = @Schema(type = "integer", format = "int64", example = "1"))
@@ -32,7 +29,6 @@ public interface ProjectApi {
             content = @Content(schema = @Schema(implementation = ProjectResponseDto.class)))
     @ApiResponse(responseCode = "404", description = "Project not found")
     ResponseEntity<ProjectResponseDto> getById(@PathVariable Long id);
-
 
     @Operation(summary = "Create new project", description = "Creates a new project category.")
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Category details", required = true,
@@ -43,7 +39,6 @@ public interface ProjectApi {
     @ApiResponse(responseCode = "403", description = "Forbidden - requires ADMIN privileges"
     )
     ResponseEntity<ProjectResponseDto> create(@RequestBody ProjectRequestDto categoryDto);
-
 
     @Operation(summary = "Update project",
             description = "Updates the name, field... of an existing project.")
@@ -56,7 +51,6 @@ public interface ProjectApi {
     @ApiResponse(responseCode = "403", description = "Forbidden - requires ADMIN privileges")
     @ApiResponse(responseCode = "404", description = "Project not found")
     ResponseEntity<ProjectResponseDto> update(@PathVariable(name = "id") Long id, @RequestBody ProjectRequestDto requestDto);
-
 
     @Operation(summary = "Delete project", description = "Deletes a project by its ID.")
     @Parameter(name = "id", description = "ID of the category to delete", required = true,

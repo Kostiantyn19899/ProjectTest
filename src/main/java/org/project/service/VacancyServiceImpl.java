@@ -1,6 +1,5 @@
 package org.project.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.project.dto.VacancyRequestDto;
@@ -11,7 +10,6 @@ import org.project.exception.VacancyNotFoundException;
 import org.project.repository.ProjectJpaRepository;
 import org.project.repository.VacancyJpaRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
