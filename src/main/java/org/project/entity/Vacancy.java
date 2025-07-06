@@ -31,5 +31,4 @@ public class Vacancy {
     @JoinColumn(name = "project_id")
     @JsonBackReference
     private Project project;
-
 }
