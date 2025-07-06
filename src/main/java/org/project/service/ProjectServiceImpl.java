@@ -29,6 +29,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public Project create(Project project) {
         if (repository.findByName(project.getName()).isPresent()) {
             throw new ProjectAlreadyExistsException("Project already exists with name: " + project.getName());
@@ -44,17 +45,18 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public Project update(Long id, ProjectRequestDto requestDto) {
         Project project = getById(id);
+
         project.setName(requestDto.name());
         project.setField(requestDto.field());
         project.setExperience(requestDto.experience());
         project.setDescription(requestDto.description());
         project.setDeadline(requestDto.deadline());
-        return create(project);
+
+        return repository.save(project);
     }
 }
-
-
 
 

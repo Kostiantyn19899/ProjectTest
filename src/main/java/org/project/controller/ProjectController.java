@@ -25,40 +25,34 @@ public class ProjectController implements ProjectApi {
 
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<ProjectResponseDto>> getAll() {
-        List<ProjectResponseDto> dtolist = projectService.getAll().stream()
+        List<ProjectResponseDto> dtoList = projectService.getAll().stream()
                 .map(projectMapper::toDto).collect(Collectors.toList());
-        return new ResponseEntity<>(dtolist, HttpStatus.OK);
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    @Override
     public ResponseEntity<ProjectResponseDto> getById(@PathVariable Long id) {
-        Project category = projectService.getById(id);
-        return new ResponseEntity<>(projectMapper.toDto(category), HttpStatus.OK);
+        Project project = projectService.getById(id);
+        return new ResponseEntity<>(projectMapper.toDto(project), HttpStatus.OK);
     }
 
-
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ProjectResponseDto> create(@Valid @RequestBody ProjectRequestDto requestDto) {
         Project entity = projectMapper.toEntity(requestDto);
-        Project createdCategory = projectService.create(entity);
-        return new ResponseEntity<>(projectMapper.toDto(createdCategory), HttpStatus.CREATED);
+        Project createdProject = projectService.create(entity);
+        return new ResponseEntity<>(projectMapper.toDto(createdProject), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    @Override
     public ResponseEntity<ProjectResponseDto> update(@Valid @PathVariable(name = "id") Long id, @RequestBody ProjectRequestDto requestDto) {
-        Project category = projectService.update(id, requestDto);
-        return new ResponseEntity<>(projectMapper.toDto(category), HttpStatus.OK);
+        Project project = projectService.update(id, requestDto);
+        return new ResponseEntity<>(projectMapper.toDto(project), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    @Override
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         projectService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -35,24 +35,4 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handlerAlreadyExistsException(Exception e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
-//
-//    @ExceptionHandler({CartIsEmptyException.class})
-//    public ResponseEntity<Object> handlerEntityIsEmptyException(Exception e) {
-//        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-//    }
-//
-//    @ExceptionHandler({NotCurrentClientCartException.class})
-//    public ResponseEntity<Object> handlerNotCurrentClientCartException(Exception e) {
-//        return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
-//    }
-//
-//    @ExceptionHandler({PermissionDeniedException.class})
-//    public ResponseEntity<Object> handlerPermissionDeniedException(Exception e) {
-//        return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
-//    }
-//
-//    @ExceptionHandler({ImpossibleChangeCurrentOrderStatusException.class})
-//    public ResponseEntity<Object> handlerImpossibleChangeCurrentOrderStatusException(Exception e) {
-//        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
-//    }
 }

@@ -16,12 +16,11 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("projects")
 @RequiredArgsConstructor
-public class VacancyController {
+public class VacancyController implements VacancyApi {
 
     private final VacancyMapper vacancyMapper;
 
     private final VacancyService vacancyService;
-
 
     @GetMapping("/{id}/vacancies")
     public ResponseEntity<List<VacancyResponseDto>> getVacanciesByProjectId(@PathVariable Long id) {
@@ -31,9 +30,20 @@ public class VacancyController {
     }
 
     @PostMapping("/{id}/vacancies")
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<VacancyResponseDto> create(@Valid @PathVariable(name = "id") Long id, @RequestBody VacancyRequestDto requestDto) {
         Vacancy vacancy = vacancyService.addVacancyToProject(requestDto,id);
         return new ResponseEntity<>(vacancyMapper.toDto(vacancy), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/vacancies/{id}")
+    public ResponseEntity<VacancyResponseDto> updateVacancy(@PathVariable Long id, @Valid @RequestBody VacancyRequestDto request) {
+        Vacancy vacancy = vacancyService.updateVacancy(id, request);
+        return new ResponseEntity<>(vacancyMapper.toDto(vacancy), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/vacancies/{id}")
+    public ResponseEntity<Void> deleteVacancy(@PathVariable Long id) {
+        vacancyService.deleteVacancy(id);
+        return ResponseEntity.noContent().build();
     }
 }

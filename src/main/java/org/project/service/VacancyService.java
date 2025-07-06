@@ -14,4 +14,8 @@ public interface VacancyService {
 
     Vacancy addVacancyToProject(VacancyRequestDto requestDto, Long projectId);
 
+    Vacancy updateVacancy(Long id, VacancyRequestDto requestDto);
+
+    void deleteVacancy(Long id);
+
 }
