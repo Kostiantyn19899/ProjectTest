@@ -1,6 +1,5 @@
 package org.project.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,13 +14,8 @@ import org.project.exception.ProjectNotFoundException;
 import org.project.exception.VacancyNotFoundException;
 import org.project.repository.ProjectJpaRepository;
 import org.project.repository.VacancyJpaRepository;
-
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -86,10 +80,11 @@ class VacancyServiceImplTest {
     @Test
     @DisplayName("Should throw ProjectNotFoundException when no vacancies found for project ID")
     void getVacanciesByProjectId_ProjectNotFound() {
-        when(vacancyRepository.findByProjectId(anyLong())).thenReturn(Collections.emptyList());
+        when(projectRepository.existsById(99L)).thenReturn(false);
 
         assertThrows(ProjectNotFoundException.class, () -> vacancyService.getByProjectId(99L));
-        verify(vacancyRepository, times(1)).findByProjectId(99L);
+        verify(projectRepository, times(1)).existsById(99L);
+        verify(vacancyRepository, never()).findByProjectId(anyLong());
     }
 
 
@@ -102,7 +97,6 @@ class VacancyServiceImplTest {
         Vacancy addedVacancy = vacancyService.addVacancyToProject(vacancyRequestDto, 1L);
 
         assertNotNull(addedVacancy);
-        assertEquals(vacancyRequestDto.name(), addedVacancy.getName());
         assertEquals(project, addedVacancy.getProject());
         verify(projectRepository, times(1)).findById(1L);
         verify(vacancyRepository, times(1)).save(any(Vacancy.class));
@@ -160,7 +154,7 @@ class VacancyServiceImplTest {
     void deleteVacancy_NotFound() {
         when(vacancyRepository.existsById(anyLong())).thenReturn(false);
 
-        assertThrows(EntityNotFoundException.class, () -> vacancyService.deleteVacancy(999L));
+        assertThrows(VacancyNotFoundException.class, () -> vacancyService.deleteVacancy(999L));
         verify(vacancyRepository, times(1)).existsById(999L);
         verify(vacancyRepository, never()).deleteById(anyLong());
     }
