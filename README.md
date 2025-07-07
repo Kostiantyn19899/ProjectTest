@@ -1,117 +1,110 @@
-Project: Project and Vacancy Management System (Backend)
-This repository contains the backend part of the project and vacancy management system, developed as part of a test
-assignment. The system provides a REST API for performing CRUD (Create, Read, Update, Delete) operations on projects and
-their associated vacancies.
+# ProjectTest: Project and Vacancy Management System (Backend)
 
-Project Description
-The project is a RESTful API that allows you to:
+This repository contains the backend part of the project and job management system developed as part of the test task.
+The system provides a REST API for performing CRUD (Create, Read, Update, Delete) operations on projects and related
+vacancies.
 
-Manage Projects: Create, view (list or by ID), update, and delete project information. Each project has a name, field,
-required experience, description, and deadline.
 
-Manage Vacancies: Add vacancies to specific projects, view them, update, and delete. Vacancies include a name, field,
-experience, country, and description.
+## General description
 
-Technologies Used
-Programming Language: Java 22
+***The project is a RESTful API that allows you to:***
 
-Framework: Spring Boot 3.3.8
+- Manage projects: Create, view (list or by ID), update and delete information about projects. Each
+  project has a name, area, required experience, description and deadline.
 
-Build Tool: Maven
+- Manage vacancies: Add vacancies to specific projects, view them, update and delete them. Vacancies include
+  a name, area, experience, country and description.
 
-Database: PostgreSQL 16
+***Technologies Used***
 
-ORM: Spring Data JPA / Hibernate
+- Programming Language: Java 22
 
-Database Migrations: Liquibase 4.29.0
+- Framework: Spring Boot 3.3.8
 
-Validation: Jakarta Bean Validation (via Spring Boot Starter Validation)
+- Project Builder: Maven
 
-Object Mapping: MapStruct 1.5.5.Final
+- Database: PostgreSQL 16
 
-Boilerplate Reduction: Lombok 1.18.34
+- ORM: Spring Data JPA / Hibernate
 
-API Documentation: Springdoc OpenAPI UI (Swagger UI) 2.5.0
+- Database Migrations: Liquibase 4.29.0
 
-Testing: JUnit 5, Mockito, Spring Boot Starter Test
+- Validation: Jakarta Bean Validation (via Spring Boot Starter Validation)
 
-Containerization: Docker, Docker Compose
+- Object Mapping: MapStruct 1.5.5.Final
 
-Project Structure
-The project has a standard Spring Boot structure:
+- Boilerplate Code Reduction: Lombok 1.18.34
 
-org.project.controller: REST controllers for handling HTTP requests.
+- API Documentation: Springdoc OpenAPI UI (Swagger UI) 2.5.0
 
-org.project.service: Service layer containing business logic.
+- Containerization: Docker, Docker Compose
 
-org.project.repository: Spring Data JPA interfaces for database interaction.
+- Deployment: Railway
 
-org.project.entity: JPA entities representing database tables.
+### Project Structure
 
-org.project.dto: Data Transfer Objects (DTOs) for API requests and responses.
+***The project has a standard Spring Boot structure:***
 
-org.project.dto.mapper: MapStruct interfaces for converting entities to DTOs and vice versa.
+- org.project.controller: REST controllers for handling HTTP requests.
 
-org.project.exception: Custom exceptions.
+- org.project.service: Service layer containing business logic.
 
-org.project.handler: Global exception handler.
+- org.project.repository: Spring Data JPA interfaces for interacting with the database.
 
-Local Setup Instructions
+- org.project.entity: JPA entities representing database tables.
+
+- org.project.dto: Data Transfer Objects (DTOs) for API requests and responses.
+
+- org.project.dto.mapper: MapStruct interfaces for converting entities to DTOs and back.
+
+- org.project.exception: Custom exceptions.
+
+- org.project.handler: Global exception handler.
+
+## Instructions for running locally
 To run the project locally, you will need Docker and Docker Compose installed.
 
 Clone the repository:
 
 git clone https://github.com/Kostiantyn19899/ProjectTest.git
-cd ProjectTest # Navigate to the project's root directory
+cd ProjectTest # Go to the project root directory
 
-Ensure your pom.xml is correctly configured:
+To run locally with Docker Compose, you will need the src/main/resources/application-local.properties file
 
-The com.h2database:h2 dependency should have scope=test.
+Important: Make sure that the port in spring.datasource.url (5432 or 5433) matches the one you mapped to port 5432 of the PostgreSQL container on your host machine in docker-compose.yml (e.g. ports: - "5432:5432" or ports: - "5433:
+5432").
 
-The spring-boot-maven-plugin version tag should be removed to inherit from the parent POM.
-
-The maven-compiler-plugin version should be 3.11.0 or higher.
-
-The src/main/resources/application.properties file should either be empty regarding DataSource settings or contain only
-general settings that do not conflict with Docker Compose environment variables.
-
-Build your Spring Boot application's JAR file:
-Make sure you are in the project's root directory (where pom.xml is located).
+Build your Spring Boot application JAR:
+Make sure you are in the project root directory (where the pom.xml is located).
 
 mvn clean package -DskipTests
 
 This will create an executable JAR file in the target/ directory.
 
-Run the application using Docker Compose:
-Ensure that Dockerfile and docker-compose.yml are in the root directory of your project.
+Start the PostgreSQL database using Docker Compose:
+Make sure the Dockerfile and docker-compose.yml files are in the root directory of your project.
 
-docker-compose up --build -d
+docker-compose up -d postgres
 
---build: Rebuilds your application's image (based on Dockerfile).
+docker-compose ps will help you check the status of the postgres container.
 
--d: Runs the containers in detached mode (in the background).
+Run the Spring Boot application locally (via IDE or JAR):
 
-Note: If you encounter a "port is already allocated" error for port 5432 (PostgreSQL) or 8080 (application), you will
-need to either free up that port on your host machine or change it in the docker-compose.yml file (e.g., to 5433:5432
-for PostgreSQL or 8081:8080 for the application).
+Via IntelliJ IDEA: In the run configuration of your Spring Boot application (App or ProjectTestApplication), in the "
+Active profiles" field, enter local.
 
-Check container status:
+Via the command line (if you are running a JAR):
 
-docker-compose ps
-
-Both containers (postgres and project) should be in the Up state.
-
-API Documentation (Swagger UI)
-After successfully starting the application, the API documentation will be available via Swagger UI at the following
-address:
+java -jar target/ProjectTest-1.0-SNAPSHOT.jar --spring.profiles.active=local
+Документация API (Swagger UI)
+После успешного запуска приложения, документация API будет доступна через Swagger UI по следующему адресу:
 http://localhost:8080/swagger-ui/index.html
 https://projecttest-production-d14c.up.railway.app/swagger-ui/index.html
+Here you can view all available endpoints, their parameters, request/response models and execute requests directly
+from the browser.
 
-Here you can view all available endpoints, their parameters, request/response models, and execute requests directly from
-your browser.
-
-API Endpoints and Example Requests
-You can use Postman, Insomnia, curl, or Swagger UI to test the API.
+API endpoints and request examples
+You can use Postman, Insomnia, curl or Swagger UI to test the API.
 
 Project Management
 
@@ -119,7 +112,7 @@ Project Management
 
 GET /projects
 
-Example response (200 OK):
+Response example (200 OK):
 
 [
 {
@@ -138,7 +131,7 @@ POST /projects
 
 Header: Content-Type: application/json
 
-Example request body:
+Request body example:
 
 {
 "name": "New Awesome Project",
@@ -148,7 +141,7 @@ Example request body:
 "deadline": "2026-06-30"
 }
 
-Example response (201 Created):
+Response example (201 Created):
 
 {
 "id": 1,
@@ -159,11 +152,11 @@ Example response (201 Created):
 "deadline": "2026-06-30"
 }
 
-3. Get project by ID
+3. Getting a project by ID
 
 GET /projects/{id}
 
-Example response (200 OK):
+Response example (200 OK):
 
 {
 "id": 1,
@@ -174,17 +167,17 @@ Example response (200 OK):
 "deadline": "2026-06-30"
 }
 
-Example response (404 Not Found):
+Response example (404 Not Found):
 
 Project not found with id: 99
 
-4. Edit a project
+4. Editing a project
 
 PUT /projects/{id}
 
 Header: Content-Type: application/json
 
-Example request body:
+Request body example:
 
 {
 "name": "Updated Project Name",
@@ -194,7 +187,7 @@ Example request body:
 "deadline": "2026-07-31"
 }
 
-Example response (200 OK):
+Response example (200 OK):
 
 {
 "id": 1,
@@ -205,19 +198,19 @@ Example response (200 OK):
 "deadline": "2026-07-31"
 }
 
-5. Delete a project
+5. Deleting a project
 
 DELETE /projects/{id}
 
-Example response (200 OK): Empty response body.
+Response example (200 OK): Empty response body.
 
-Vacancy Management
+Managing vacancies
 
-1. Get a list of vacancies for a specific project
+1. Getting a list of vacancies for a specific project
 
 GET /projects/{id}/vacancies
 
-Example response (200 OK):
+Response example (200 OK):
 
 [
 {
@@ -231,13 +224,13 @@ Example response (200 OK):
 }
 ]
 
-2. Add a vacancy to a project
+2. Adding a vacancy to a project
 
 POST /projects/{id}/vacancies
 
 Header: Content-Type: application/json
 
-Example request body:
+Request body example:
 
 {
 "name": "Frontend Developer",
@@ -247,7 +240,7 @@ Example request body:
 "description": "Seeking a React specialist for our new project."
 }
 
-Example response (201 Created):
+Response example (201 Created):
 
 {
 "id": 102,
@@ -259,13 +252,13 @@ Example response (201 Created):
 "projectId": 1
 }
 
-3. Edit a vacancy
+3. Editing a vacancy
 
 PUT /vacancies/{id}
 
 Header: Content-Type: application/json
 
-Example request body:
+Request body example:
 
 {
 "name": "Senior Frontend Developer",
@@ -275,7 +268,7 @@ Example request body:
 "description": "Updated description for senior React specialist."
 }
 
-Example response (200 OK):
+Response example (200 OK):
 
 {
 "id": 102,
@@ -287,18 +280,22 @@ Example response (200 OK):
 "projectId": 1
 }
 
-4. Delete a vacancy
+4. Deleting a vacancy
 
 DELETE /vacancies/{id}
 
-Example response (204 No Content): Empty response body.
+Response example (204 No Content): Empty response body.
 
-Deployment
+Deploy to Railway
+The project is configured for deployment to Railway.
+
 Link to the deployed application:
 https://projecttest-production-d14c.up.railway.app
 
 Instructions for testing the deployed project:
-You can use the example requests above with Postman, Insomnia, or curl, replacing localhost:8080 with the public URL of
-your deployed application.
+You can use the above sample requests with Postman, Insomnia or curl.
+Swagger UI documentation will be available at
+https://projecttest-production-d14c.up.railway.app/swagger-ui/index.html
 
 Thank you for your attention to my project!
+Konstantin Serikov (https://www.linkedin.com/in/kostiantin-sierikov-95700b337/)
