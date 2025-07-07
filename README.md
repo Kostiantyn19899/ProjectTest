@@ -105,7 +105,7 @@ API Documentation (Swagger UI)
 After successfully starting the application, the API documentation will be available via Swagger UI at the following
 address:
 http://localhost:8080/swagger-ui/index.html
-(If you changed the application's port to 8081, then http://localhost:8081/swagger-ui/index.html)
+https://projecttest-production-d14c.up.railway.app/swagger-ui/index.html
 
 Here you can view all available endpoints, their parameters, request/response models, and execute requests directly from
 your browser.
@@ -295,7 +295,7 @@ Example response (204 No Content): Empty response body.
 
 Deployment
 Link to the deployed application:
-https://projecttest-nagb.onrender.com
+https://projecttest-production-d14c.up.railway.app
 
 Instructions for testing the deployed project:
 You can use the example requests above with Postman, Insomnia, or curl, replacing localhost:8080 with the public URL of
