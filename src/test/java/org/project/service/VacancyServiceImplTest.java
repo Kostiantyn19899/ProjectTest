@@ -14,11 +14,14 @@ import org.project.exception.ProjectNotFoundException;
 import org.project.exception.VacancyNotFoundException;
 import org.project.repository.ProjectJpaRepository;
 import org.project.repository.VacancyJpaRepository;
+import org.springframework.test.context.ActiveProfiles;
+
 import java.time.LocalDate;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 @DisplayName("VacancyServiceImpl Unit Tests")
 class VacancyServiceImplTest {

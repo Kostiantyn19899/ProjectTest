@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -25,6 +26,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@ActiveProfiles("test")
 @WebMvcTest(ProjectController.class)
 class ProjectControllerTest {
 
@@ -97,7 +99,6 @@ class ProjectControllerTest {
     @DisplayName("GET /projects should return all projects")
     void getAllProjects() throws Exception {
         List<Project> projects = Arrays.asList(project1, project2);
-        List<ProjectResponseDto> dtos = Arrays.asList(projectResponseDto1, projectResponseDto2);
 
         when(projectService.getAll()).thenReturn(projects);
         when(projectMapper.toDto(project1)).thenReturn(projectResponseDto1);

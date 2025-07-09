@@ -12,6 +12,8 @@ import org.project.entity.Project;
 import org.project.exception.ProjectAlreadyExistsException;
 import org.project.exception.ProjectNotFoundException;
 import org.project.repository.ProjectJpaRepository;
+import org.springframework.test.context.ActiveProfiles;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +24,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.never;
 
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 class ProjectServiceImplTest {
 
